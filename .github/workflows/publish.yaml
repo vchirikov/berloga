@@ -8,15 +8,6 @@ defaults:
     shell: bash
 on:
   workflow_dispatch:
-    inputs:
-      confirmation:
-        description: "Are you sure you want to publish?"
-        required: true
-        default: "no"
-        type: choice
-        options:
-          - "no"
-          - "yes"
   push:
     branches:
       - release/v*
@@ -124,6 +115,7 @@ jobs:
           --runtime linux-x64
           -c Release
           -p:NuGetPackageVersion=${{ steps.nbgv.outputs.SemVer2 }}
+          -p:SourceRevisionId=${{ steps.nbgv.outputs.GitCommitId }}
           -t:PublishContainer
 
       - name: docker build & publish / go

@@ -16,12 +16,15 @@
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:10.0.0-preview.7-noble-chiseled-composite</ContainerBaseImage>
     <ContainerAppCommandInstruction>Entrypoint</ContainerAppCommandInstruction>
     <ContainerRegistry>ghcr.io</ContainerRegistry>
-    <ContainerRepository>vchirikov/berloga</ContainerRepository>
+    <ContainerRepository>vchirikov/dotnet-bench</ContainerRepository>
     <ContainerImageTag Condition="('$(ContainerImageTag)' == '' OR '$(ContainerImageTag)' == 'latest') AND '$(NuGetPackageVersion)' != ''">$(NuGetPackageVersion)</ContainerImageTag>
+    <ContainerGenerateLabelsImageRevision>true</ContainerGenerateLabelsImageRevision>
     <ContainerGenerateLabelsDotnetToolset>false</ContainerGenerateLabelsDotnetToolset>
     <ContainerGenerateLabelsImageLicenses>false</ContainerGenerateLabelsImageLicenses >
     <ContainerGenerateLabelsImageDescription>false</ContainerGenerateLabelsImageDescription >
     <ContainerGenerateLabelsImageAuthors>false</ContainerGenerateLabelsImageAuthors >
-    <ContainerGenerateLabelsImageDocumentation>false</ContainerGenerateLabelsImageDocumentation >
+    <ContainerGenerateLabelsImageDocumentation>false</ContainerGenerateLabelsImageDocumentation>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PrivateRepositoryUrl>https://github.com/vchirikov/berloga</PrivateRepositoryUrl>
   </PropertyGroup>
 </Project>
