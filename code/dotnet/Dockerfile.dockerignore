@@ -1,0 +1,10 @@
+# https://docs.docker.com/build/concepts/context/#filename-and-location
+artifacts/
+.mono/
+.vs/
+.vscode/
+.idea
+*.binlog
+**/bin/
+**/obj/
+*.DotSettings.user

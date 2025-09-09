@@ -1,0 +1,38 @@
+<Project ToolsVersion="latest" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsAotCompatible>true</IsAotCompatible>
+    <RepoRoot>$(MSBuildThisFileDirectory)\</RepoRoot>
+    <SolutionDir Condition="$(SolutionDir) == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(SolutionDir)artifacts</ArtifactsPath>
+    <PackageOutputPath>$(ArtifactsPath)\nupkg</PackageOutputPath>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>All</AnalysisMode>
+    <AnalysisLevel>preview-all</AnalysisLevel>
+    <NoLogo>true</NoLogo>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <LangVersion>preview</LangVersion>
+    <NuGetAudit>false</NuGetAudit>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Features>strict</Features>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NBGV_GitEngine>Disabled</NBGV_GitEngine>
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <EnableDefaultRazorGenerateItems>false</EnableDefaultRazorGenerateItems>
+    <RazorCompileOnBuild>false</RazorCompileOnBuild>
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+    <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
+    <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.AspNetCore.Http.Generated</InterceptorsNamespaces>
+    <OptimizationPreference>Speed</OptimizationPreference>
+    <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+  </PropertyGroup>
+</Project>

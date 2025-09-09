@@ -1,0 +1,14 @@
+artifacts/
+.mono/
+.vs/
+.vscode/
+.idea
+*.binlog
+bin/
+obj/
+tmp/
+*.DotSettings.user
+*.Generated.cs
+# can contain personal info
+configs/*.local.*json
+**/testsettings.local.*json
