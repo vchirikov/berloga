@@ -25,5 +25,5 @@ LABEL org.opencontainers.image.created="${IMAGE_CREATED}" \
   org.opencontainers.image.version="${IMAGE_VERSION}" \
   org.opencontainers.image.revision="${IMAGE_REVISION}" \
   org.opencontainers.image.licenses="MIT" \
-  org.opencontainers.image.title="go-json-bench" \
+  org.opencontainers.image.title="go-bench" \
   org.opencontainers.image.description="Simple go/GIN app to benchmark vs dotnet/aspnetcore"

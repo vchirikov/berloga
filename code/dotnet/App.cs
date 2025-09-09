@@ -16,19 +16,30 @@ var builder = WebApplication.CreateEmptyBuilder(new() {
   EnvironmentName = "Production",
 });
 
-builder.WebHost.ConfigureKestrel(static opt => {
-  int port = int.Parse(
-    Environment.GetEnvironmentVariable("PORT") ?? "80",
-    NumberStyles.None,
-    CultureInfo.InvariantCulture
-  );
+builder.Configuration.AddEnvironmentVariables();
+
+int port = int.Parse(
+  builder.Configuration["PORT"] ?? "80",
+  NumberStyles.None,
+  CultureInfo.InvariantCulture
+);
+
+builder.WebHost.ConfigureKestrel(opt => {
   opt.Listen(IPAddress.Parse("0.0.0.0"), port, srv => {
     srv.Protocols = HttpProtocols.Http1;
     srv.DisableAltSvcHeader = true;
   });
 });
 
+bool waitForDataBeforeAllocatingBuffer = builder.Configuration.ReadBool("ASPNETCORE_WAIT_FOR_DATA") ?? false;
+bool unsafePreferInlineScheduling = builder.Configuration.ReadBool("ASPNETCORE_INLINE_SCHEDULING") ?? true;
+
 builder.WebHost.UseKestrelCore();
+builder.WebHost.UseSockets(opt => {
+  opt.WaitForDataBeforeAllocatingBuffer = waitForDataBeforeAllocatingBuffer;
+  opt.UnsafePreferInlineScheduling = unsafePreferInlineScheduling;
+});
+
 builder.WebHost.ConfigureKestrel(static opt => {
   opt.AddServerHeader = false;
   opt.Limits.MinResponseDataRate = null;
@@ -79,4 +90,24 @@ internal record struct JsonBody
 [JsonSerializable(typeof(JsonBody))]
 internal sealed partial class JsonContext : JsonSerializerContext
 {
+}
+
+internal static class Extensions
+{
+  public static bool? ReadBool(this IConfiguration self, string key)
+  {
+    string? val = self[key]?.Trim();
+    if (string.IsNullOrWhiteSpace(val)) {
+      return null;
+    }
+
+    if (bool.TryParse(val, out bool result)) {
+      return result;
+    }
+    return val.Length == 1 ? val[0] switch {
+      '1' => true,
+      '0' => false,
+      _ => null,
+    } : null;
+  }
 }
