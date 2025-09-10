@@ -107,6 +107,19 @@ jobs:
           dotnet-quality: "preview"
           dotnet-version: "10.x"
 
+      - name: docker build & publish / dotnet-aot
+        working-directory: code/dotnet
+        run: >-
+          echo -e "\033[32mBuild & publish dotnet-aot\033[0m" ;
+          dotnet publish App.csproj
+          --runtime linux-x64
+          -c Release
+          -p:PublishAot=true
+          -p:ContainerTitle=dotnet-aot-bench
+          -p:NuGetPackageVersion=${{ steps.nbgv.outputs.SemVer2 }}
+          -p:SourceRevisionId=${{ steps.nbgv.outputs.GitCommitId }}
+          -t:PublishContainer
+
       - name: docker build & publish / dotnet
         working-directory: code/dotnet
         run: >-
@@ -114,6 +127,8 @@ jobs:
           dotnet publish App.csproj
           --runtime linux-x64
           -c Release
+          -p:PublishAot=false
+          -p:ContainerTitle=dotnet-bench
           -p:NuGetPackageVersion=${{ steps.nbgv.outputs.SemVer2 }}
           -p:SourceRevisionId=${{ steps.nbgv.outputs.GitCommitId }}
           -t:PublishContainer

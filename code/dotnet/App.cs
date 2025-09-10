@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 // enable LOH compaction during GC gen2
 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-
 WebApplicationBuilder builder = WebApplication.CreateEmptyBuilder(new() {
   Args = args,
   ApplicationName = "dotnet",
@@ -20,11 +19,38 @@ WebApplicationBuilder builder = WebApplication.CreateEmptyBuilder(new() {
 
 builder.Configuration.AddEnvironmentVariables();
 
-int port = int.Parse(
-  builder.Configuration["PORT"] ?? "80",
-  NumberStyles.None,
-  CultureInfo.InvariantCulture
-);
+int maxWorker = builder.Configuration["DOTNET_THREADPOOL_MAX_WORKER"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => 16384,
+};
+
+int maxIo = builder.Configuration["DOTNET_THREADPOOL_MAX_IO"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => 16384,
+};
+
+if (!ThreadPool.SetMaxThreads(maxWorker, maxIo)) {
+  throw new InvalidOperationException("Can't set thread pool max threads");
+}
+
+int minWorker = builder.Configuration["DOTNET_THREADPOOL_MIN_WORKER"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => Environment.ProcessorCount,
+};
+
+int minIo = builder.Configuration["DOTNET_THREADPOOL_MIN_IO"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => Environment.ProcessorCount,
+};
+
+if (!ThreadPool.SetMinThreads(minWorker, minIo)) {
+  throw new InvalidOperationException("Can't set thread pool min threads");
+}
+
+int port = builder.Configuration["PORT"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => 80,
+};
 
 builder.WebHost.ConfigureKestrel(opt => {
   opt.Listen(IPAddress.Parse("0.0.0.0"), port, srv => {
@@ -156,10 +182,12 @@ internal static class Extensions
       return result;
     }
 
-    return val.Length == 1 ? val[0] switch {
-      '1' => true,
-      '0' => false,
-      _ => null,
-    } : null;
+    return val.Length == 1
+      ? val[0] switch {
+        '1' => true,
+        '0' => false,
+        _ => null,
+      }
+      : null;
   }
 }
