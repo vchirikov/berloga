@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@biomejs/biome": "2.2.3",
+    "@types/k6": "^1.2.0",
+    "@types/node": "24.3.1",
+    "typescript": "5.9.2"
+  },
+  "type": "module",
+  "version": "0.0.0-placeholder",
+  "license": "UNLICENSED",
+  "name": "berloga",
+  "private": true,
+  "scripts": {
+    "lint": "biome lint && tsc --project tsconfig.json --noEmit && echo Done"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "root": true,
+  "vcs": {
+    "defaultBranch": "master",
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      // astro files again shows noUnusedImports, also it doesn't support it well with assists
+      "!**/*.astro",
+      "!./tmp",
+      "!./dist",
+      "!./node_modules"
+    ],
+    // 128kb
+    "maxSize": 131072
+  },
+  "formatter": {
+    "enabled": true,
+    "indentWidth": 2,
+    "includes": [
+      "**",
+      "!**/*.generated.*"
+    ],
+    "lineEnding": "lf",
+    "lineWidth": 120,
+    "indentStyle": "space",
+    "useEditorconfig": true
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "jsxQuoteStyle": "single",
+      "trailingCommas": "es5",
+      "arrowParentheses": "asNeeded"
+    }
+  },
+  "html": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    }
+  },
+  "css": {
+    // biomejs doesn't work well with .css & vite new features
+    // https://github.com/biomejs/biome-vscode/pull/222
+    "linter": {
+      "enabled": false
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "includes": [
+      "**",
+      // doesn't support it well, autoformatting deletes Layout part of the file
+      "!**/*.astro"
+    ],
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [
+                ":URL:",
+                ":BUN:",
+                ":NODE:",
+                {
+                  "type": false
+                }
+              ],
+              ":BLANK_LINE:",
+              [
+                ":PACKAGE:",
+                ":PACKAGE_WITH_PROTOCOL:",
+                {
+                  "type": false
+                }
+              ],
+              ":BLANK_LINE:",
+              [
+                "@/components/**",
+                {
+                  "type": false
+                }
+              ],
+              ":BLANK_LINE:",
+              [
+                "@/**",
+                "#/**",
+                ":ALIAS:",
+                "!@/components/**",
+                {
+                  "type": false
+                }
+              ],
+              ":BLANK_LINE:",
+              [
+                ":PATH:",
+                "**",
+                {
+                  "type": false
+                }
+              ]
+            ]
+          }
+        },
+        "useSortedKeys": "off",
+        "useSortedAttributes": "off",
+        "useSortedProperties": "off"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "recommended": true
+      },
+      // too annoying to support, maybe re-enable later
+      "a11y": "off",
+      "style": {
+        "noNonNullAssertion": "off",
+        "noUselessElse": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": {
+          "level": "warn",
+          "fix": "unsafe"
+        }
+      }
+    }
+  }
+}

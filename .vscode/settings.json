@@ -1,6 +1,79 @@
 {
   "go.useLanguageServer": true,
+  "dotnet.defaultSolution": "./code/dotnet/App.sln",
+  "dotnet.enableXamlTools": false,
+  "dotnet.automaticallySyncWithActiveItem": false,
+  "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "fullSolution",
+  "dotnet.backgroundAnalysis.compilerDiagnosticsScope": "fullSolution",
   "dotnetAcquisitionExtension.enableTelemetry": false,
+  "editor.tabSize": 2,
+  // disable eslint if any
+  "eslint.format.enable": false,
+  "eslint.enable": false,
+  "editor.detectIndentation": false,
+  "biome.enabled": true,
+  "biome.configurationPath": "code/nodejs/biome.jsonc",
+  "biome.requireConfiguration": true,
+  "biome.runFromTemporaryLocation": false,
+  "biome.suggestInstallingGlobally": false,
+  "biome.lsp": {
+    // there is no way to do it [cross-platform yet, still](https://github.com/biomejs/biome-vscode/issues/246)
+    "bin": "code/nodejs/node_modules/@biomejs/cli-win32-x64/biome.exe",
+    // this from official site, but doesn't supported by extension (yet (?))
+    "configurationPath": "code/nodejs/biome.jsonc"
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnSave": false,
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "files.exclude": {
+    "**/.git": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "tmp": true,
+    "code/dotnet/artifacts": true,
+    "code/nodejs/package-lock.json": true,
+  },
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.check.npmIsInstalled": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "code/nodejs/node_modules/typescript/lib",
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[markdown][mdx]": {
+    "editor.renderWhitespace": "trailing",
+    "editor.formatOnSave": false,
+    "files.trimTrailingWhitespace": false,
+    "files.trimFinalNewlines": false,
+    "editor.codeActionsOnSave": [],
+    "editor.tabSize": 2
+  },
+  "trailing-spaces.syntaxIgnore": [
+    "markdown",
+    "mdx"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.biome": "explicit",
+    "source.sortImports": "never",
+    "source.addMissingImports.ts": "never",
+    "source.removeUnusedImports": "never",
+    "source.removeUnused.ts": "never"
+  },
+  "cSpell.blockCheckingWhenTextChunkSizeGreaterThan": 64,
   "cSpell.words": [
     "aspnet",
     "aspnetcore",

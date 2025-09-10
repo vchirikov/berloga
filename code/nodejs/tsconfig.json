@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "newLine": "lf",
+    "strict": true,
+    "allowImportingTsExtensions": true,
+    "sourceMap": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "checkJs": false,
+    "erasableSyntaxOnly": true,
+    "maxNodeModuleJsDepth": 1,
+    "resolveJsonModule": true,
+    "incremental": true,
+    "exactOptionalPropertyTypes": false,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "lib": [
+      "ESNext",
+    ],
+    "baseUrl": ".",
+  },
+  "include": [
+    "${configDir}/**/*.ts",
+  ],
+  "exclude": [
+    "${configDir}/node_modules",
+  ]
+}

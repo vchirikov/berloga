@@ -1,0 +1,65 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "lint",
+      "detail": "$(terminal) npm run lint",
+      "command": "npm",
+      "type": "shell",
+      "isBackground": false,
+      "args": [
+        "run",
+        "lint",
+      ],
+      "runOptions": {
+        "instanceLimit": 1,
+        "reevaluateOnRerun": false
+      },
+      "group": {
+        "isDefault": false,
+        "kind": "build"
+      },
+      "icon": {
+        "color": "terminal.ansiYellow",
+        "id": "symbol-constructor"
+      },
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "revealProblems": "never",
+        "showReuseMessage": false,
+        "clear": true,
+        "panel": "shared",
+        "group": "shared"
+      },
+      "problemMatcher": [
+        {
+          "owner": "typescript",
+          "applyTo": "allDocuments",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}/code/nodejs"
+          ],
+          "pattern": "$tsc"
+        },
+        {
+          "owner": "biome",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^(.+):(\\d+):(\\d+) (\\S+) ",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4
+          }
+        },
+      ],
+      "options": {
+        "cwd": "code/nodejs",
+      },
+    },
+  ]
+}
