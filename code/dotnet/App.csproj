@@ -13,7 +13,8 @@
   <PropertyGroup Label="Docker image publishing" Condition="'$(EnableSdkContainerSupport)' == 'true'">
     <ContainerTitle Condition="'$(ContainerTitle)' == ''">dotnet-bench</ContainerTitle>
     <ContainerVersion Condition="'$(ContainerVersion)' == '' AND '$(NuGetPackageVersion)' != ''">$(NuGetPackageVersion)</ContainerVersion>
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:10.0.0-preview.7-noble-chiseled-composite</ContainerBaseImage>
+    <!-- https://mcr.microsoft.com/en-us/artifact/mar/dotnet/aspnet/tags -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:10.0.0-rc.1-noble-chiseled-composite</ContainerBaseImage>
     <ContainerAppCommandInstruction>Entrypoint</ContainerAppCommandInstruction>
     <ContainerRegistry>ghcr.io</ContainerRegistry>
     <ContainerRepository>vchirikov/$(ContainerTitle)</ContainerRepository>
