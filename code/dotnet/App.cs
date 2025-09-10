@@ -19,20 +19,6 @@ WebApplicationBuilder builder = WebApplication.CreateEmptyBuilder(new() {
 
 builder.Configuration.AddEnvironmentVariables();
 
-int maxWorker = builder.Configuration["DOTNET_THREADPOOL_MAX_WORKER"] switch {
-  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
-  _ => 16384,
-};
-
-int maxIo = builder.Configuration["DOTNET_THREADPOOL_MAX_IO"] switch {
-  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
-  _ => 16384,
-};
-
-if (!ThreadPool.SetMaxThreads(maxWorker, maxIo)) {
-  throw new InvalidOperationException("Can't set thread pool max threads");
-}
-
 int minWorker = builder.Configuration["DOTNET_THREADPOOL_MIN_WORKER"] switch {
   { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
   _ => Environment.ProcessorCount,
@@ -45,6 +31,20 @@ int minIo = builder.Configuration["DOTNET_THREADPOOL_MIN_IO"] switch {
 
 if (!ThreadPool.SetMinThreads(minWorker, minIo)) {
   throw new InvalidOperationException("Can't set thread pool min threads");
+}
+
+int maxWorker = builder.Configuration["DOTNET_THREADPOOL_MAX_WORKER"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => 16384,
+};
+
+int maxIo = builder.Configuration["DOTNET_THREADPOOL_MAX_IO"] switch {
+  { Length: > 0 } str => int.Parse(str, NumberStyles.None, CultureInfo.InvariantCulture),
+  _ => 16384,
+};
+
+if (!ThreadPool.SetMaxThreads(maxWorker, maxIo)) {
+  throw new InvalidOperationException("Can't set thread pool max threads");
 }
 
 int port = builder.Configuration["PORT"] switch {
