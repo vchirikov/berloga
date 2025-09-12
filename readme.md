@@ -1,17 +1,31 @@
 ## K6
 
-```bash
-# where victoria-metrics-headless.infra.svc.cluster.local:8428 is your prometheus remote-write compatible server
-# I use victoria metrics
-export K6_PROMETHEUS_RW_SERVER_URL=http://victoria-metrics-headless.infra.svc.cluster.local:8428/api/v1/write \
-export K6_PROMETHEUS_RW_INSECURE_SKIP_TLS_VERIFY=true
-export K6_PROMETHEUS_RW_TREND_STATS="p(95),p(99),min,avg,max"
-export K6_PROMETHEUS_RW_PUSH_INTERVAL=1s
+```ps1
+# url of your prometheus remote-write compatible server
+$env:K6_PROMETHEUS_RW_SERVER_URL='http://10.42.0.197:8428/api/v1/write'
+$env:K6_PROMETHEUS_RW_INSECURE_SKIP_TLS_VERIFY='true'
+$env:K6_PROMETHEUS_RW_TREND_STATS='p(95),p(99),min,avg,max'
+$env:K6_PROMETHEUS_RW_PUSH_INTERVAL='2s'
 # victoria metrics [doesn't support prometheus native histograms](https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3733) but with Prometheus it might be better to use the native histogram feature
-export K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=false
+$env:K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM='false'
 
-k6 run --tag NAME=VALUE -o experimental-prometheus-rw script.js
+# e.g. dotnet-aot:
+$env:HOST='anton'
+$env:PORT='8884'
+$env:TAGS_NAME='dotnet-aot'
+$env:TAGS_ID='12'
+
+
+# or e.g. go:
+$env:HOST='anton'
+$env:PORT='8885'
+$env:TAGS_NAME='go'
+$env:TAGS_ID='22'
+
+# then run
+k6 run -o experimental-prometheus-rw benchmark.ts
 ```
+
 
 ### Formatter & Linter 
 

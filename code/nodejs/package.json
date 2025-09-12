@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@biomejs/biome": "2.2.3",
+    "@biomejs/biome": "2.2.4",
     "@types/k6": "^1.2.0",
     "@types/node": "24.3.1",
     "typescript": "5.9.2"
