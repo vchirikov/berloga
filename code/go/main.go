@@ -14,6 +14,7 @@ func main() {
 	if port == "" {
 		port = "80"
 	}
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Use(gin.Recovery())
 
@@ -32,7 +33,7 @@ func main() {
 		}
 
 		result := body.Value + id
-		c.JSON(http.StatusOK, result)
+		c.String(http.StatusOK, strconv.Itoa(result))
 	})
 
 	fmt.Println("Server starting on :" + port)
